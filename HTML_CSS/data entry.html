@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhập Dữ Liệu</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #eef2f7;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 30px;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #007bff;
+            font-size: 2rem;
+        }
+
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .back-button i {
+            font-size: 1.2rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"], input[type="number"], select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d9e6;
+            border-radius: 8px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .actions {
+            text-align: center;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1rem;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .error-message {
+            color: #d9534f;
+            font-size: 0.9rem;
+        }
+
+        .success-message {
+            color: #28a745;
+            font-size: 1rem;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .matrix-grid input {
+            text-align: center;
+            padding: 8px;
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 220px;
+            background-color: #000;
+            color: #fff;
+            text-align: center;
+            padding: 8px;
+            border-radius: 5px;
+
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -110px;
+
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="#" class="back-button" onclick="history.back();">
+            <i class="fas fa-arrow-left"></i> Quay lại
+        </a>
+        <h1>Nhập Dữ Liệu</h1>
+        <form id="dataForm">
+            <div class="form-group">
+                <label for="providerName">Tên Nhà Cung Cấp</label>
+                <input type="text" id="providerName" placeholder="Nhập tên nhà cung cấp">
+                <span class="error-message" id="providerNameError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="criteria">Tiêu Chí Đánh Giá</label>
+                <select id="criteria">
+                    <option value="">Chọn tiêu chí</option>
+                    <option value="cost">Giá cả</option>
+                    <option value="reliability">Độ tin cậy</option>
+                    <option value="coverage">Phạm vi bảo hiểm</option>
+                    <option value="support">Hỗ trợ khách hàng</option>
+                </select>
+                <span class="error-message" id="criteriaError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="weights">Trọng Số</label>
+                <div class="matrix-grid">
+                    <input type="number" id="weight1" min="0" placeholder="Tiêu chí 1">
+                    <input type="number" id="weight2" min="0" placeholder="Tiêu chí 2">
+                    <input type="number" id="weight3" min="0" placeholder="Tiêu chí 3">
+                </div>
+                <span class="error-message" id="weightsError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Mô Tả</label>
+                <textarea id="description" rows="4" placeholder="Mô tả thêm về nhà cung cấp..."></textarea>
+            </div>
+
+            <div class="actions">
+                <button type="button" id="submitButton">Lưu Dữ Liệu</button>
+            </div>
+
+            <div class="success-message" id="successMessage"></div>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('dataForm');
+        const providerName = document.getElementById('providerName');
+        const criteria = document.getElementById('criteria');
+        const weight1 = document.getElementById('weight1');
+        const weight2 = document.getElementById('weight2');
+        const weight3 = document.getElementById('weight3');
+        const description = document.getElementById('description');
+        const submitButton = document.getElementById('submitButton');
+
+        const providerNameError = document.getElementById('providerNameError');
+        const criteriaError = document.getElementById('criteriaError');
+        const weightsError = document.getElementById('weightsError');
+        const successMessage = document.getElementById('successMessage');
+
+        submitButton.addEventListener('click', () => {
+            let isValid = true;
+
+            if (!providerName.value.trim()) {
+                providerNameError.textContent = 'Tên nhà cung cấp không được để trống.';
+                isValid = false;
+            } else {
+                providerNameError.textContent = '';
+            }
+
+            if (!criteria.value) {
+                criteriaError.textContent = 'Vui lòng chọn tiêu chí.';
+                isValid = false;
+            } else {
+                criteriaError.textContent = '';
+            }
+
+            if (!weight1.value || !weight2.value || !weight3.value) {
+                weightsError.textContent = 'Vui lòng nhập đủ trọng số cho các tiêu chí.';
+                isValid = false;
+            } else {
+                weightsError.textContent = '';
+            }
+
+            if (isValid) {
+                successMessage.textContent = 'Dữ liệu đã được lưu thành công!';
+                form.reset();
+                setTimeout(() => successMessage.textContent = '', 3000);
+            }
+        });
+    </script>
+</body>
+</html>

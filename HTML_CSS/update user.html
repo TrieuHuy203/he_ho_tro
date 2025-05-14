@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cập Nhật Người Dùng</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7fc;
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #4a90e2;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            font-size: 1rem;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #4a90e2;
+            box-shadow: 0 0 8px rgba(74, 144, 226, 0.3);
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background-color: #357abd;
+            transform: translateY(-2px);
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #4a90e2;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .back-btn:hover {
+            background-color: #357abd;
+            transform: translateY(-2px);
+        }
+
+        .icon {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cập Nhật Thông Tin Người Dùng</h1>
+        <form id="updateForm">
+            <label for="username">Tên Đăng Nhập</label>
+            <input type="text" id="username" name="username" placeholder="Nhập tên đăng nhập" required>
+
+            <label for="role">Phân Quyền</label>
+            <select id="role" name="role">
+                <option value="user">Người Dùng</option>
+                <option value="admin">Quản Trị Viên</option>
+            </select>
+
+            <button type="submit"><i class="fas fa-save icon"></i>Cập Nhật</button>
+        </form>
+        <a href="#" class="back-btn"><i class="fas fa-arrow-left icon"></i>Quay Lại</a>
+    </div>
+
+    <script>
+        document.getElementById('updateForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Ngăn chặn hành vi gửi form mặc định
+            const username = document.getElementById('username').value;
+            const role = document.getElementById('role').value;
+
+            // Hiển thị thông tin cập nhật (để kiểm tra logic, có thể thay bằng xử lý backend)
+            alert(`Cập nhật thành công:\nTên Đăng Nhập: ${username}\nPhân Quyền: ${role}`);
+
+            // Logic cập nhật dữ liệu tại đây
+        });
+    </script>
+</body>
+</html>

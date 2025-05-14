@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Xuất Cải Thiện Nhà Cung Cấp</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 30px;
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table th, table td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn {
+            display: inline-block;
+            margin: 10px 10px 0 0;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .chart-container {
+            margin: 30px 0;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #6c757d;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .back-btn:hover {
+            background-color: #495057;
+            transform: translateY(-2px);
+        }
+
+        .icon {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Đề Xuất Cải Thiện Nhà Cung Cấp</h1>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nhà Cung Cấp</th>
+                        <th>Điểm Mạnh</th>
+                        <th>Điểm Yếu</th>
+                        <th>Đề Xuất</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Nhà Cung Cấp A</td>
+                        <td>Giá cả cạnh tranh</td>
+                        <td>Phạm vi bảo hiểm hạn chế</td>
+                        <td>Tăng phạm vi bảo hiểm</td>
+                    </tr>
+                    <tr>
+                        <td>Nhà Cung Cấp B</td>
+                        <td>Hỗ trợ khách hàng tốt</td>
+                        <td>Giá cao</td>
+                        <td>Điều chỉnh giá cả</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="improvementChart" width="400" height="200"></canvas>
+        </div>
+
+        <a href="#" class="btn">Kịch Bản "Nếu Như"</a>
+        <a href="#" class="back-btn"><i class="fas fa-arrow-left icon"></i>Quay Lại</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Dữ liệu mẫu cho biểu đồ
+        const ctx = document.getElementById('improvementChart').getContext('2d');
+        const improvementChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Nhà Cung Cấp A', 'Nhà Cung Cấp B'],
+                datasets: [
+                    {
+                        label: 'Điểm Mạnh',
+                        data: [80, 70],
+                        backgroundColor: 'rgba(40, 167, 69, 0.8)',
+                    },
+                    {
+                        label: 'Điểm Yếu',
+                        data: [20, 30],
+                        backgroundColor: 'rgba(220, 53, 69, 0.8)',
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.dataset.label}: ${context.raw}`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Nhà Cung Cấp'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Điểm Số'
+                        },
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+ß

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hiển Thị Dữ Liệu</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7fc;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 30px;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #4a90e2;
+            font-size: 2.5rem;
+        }
+
+        .search-filter {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .search-filter input {
+            width: 300px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        .search-filter select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: white;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .data-table th, .data-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .data-table th {
+            background-color: #4a90e2;
+            color: white;
+        }
+
+        .data-table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .actions button {
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .actions .edit {
+            background-color: #4caf50;
+        }
+
+        .actions .edit:hover {
+            background-color: #45a049;
+        }
+
+        .actions .delete {
+            background-color: #f44336;
+        }
+
+        .actions .delete:hover {
+            background-color: #e53935;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 15px;
+            font-size: 1rem;
+            color: white;
+            background-color: #4a90e2;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #357abd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="#" class="back-button">← Quay lại</a>
+        <h1>Hiển Thị Dữ Liệu</h1>
+        
+        <div class="search-filter">
+            <input type="text" id="search" placeholder="Tìm kiếm nhà cung cấp...">
+            <select id="filterCriteria">
+                <option value="">Tất cả tiêu chí</option>
+                <option value="Giá cả">Giá cả</option>
+                <option value="Độ tin cậy">Độ tin cậy</option>
+                <option value="Phạm vi bảo hiểm">Phạm vi bảo hiểm</option>
+                <option value="Hỗ trợ khách hàng">Hỗ trợ khách hàng</option>
+            </select>
+        </div>
+
+        <table class="data-table" id="dataTable">
+            <thead>
+                <tr>
+                    <th>Tên Nhà Cung Cấp</th>
+                    <th>Tiêu Chí</th>
+                    <th>Trọng Số</th>
+                    <th>Mô Tả</th>
+                    <th>Hành Động</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Công Ty A</td>
+                    <td>Giá cả</td>
+                    <td>0.3</td>
+                    <td>Nhà cung cấp có giá cả hợp lý.</td>
+                    <td class="actions">
+                        <button class="edit">Sửa</button>
+                        <button class="delete">Xóa</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Công Ty B</td>
+                    <td>Độ tin cậy</td>
+                    <td>0.4</td>
+                    <td>Dịch vụ đáng tin cậy.</td>
+                    <td class="actions">
+                        <button class="edit">Sửa</button>
+                        <button class="delete">Xóa</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('search');
+            const filterCriteria = document.getElementById('filterCriteria');
+            const dataTable = document.getElementById('dataTable');
+
+            searchInput.addEventListener('input', () => {
+                const searchValue = searchInput.value.toLowerCase();
+                const rows = dataTable.querySelectorAll('tbody tr');
+
+                rows.forEach(row => {
+                    const name = row.cells[0].textContent.toLowerCase();
+                    row.style.display = name.includes(searchValue) ? '' : 'none';
+                });
+            });
+
+            filterCriteria.addEventListener('change', () => {
+                const filterValue = filterCriteria.value;
+                const rows = dataTable.querySelectorAll('tbody tr');
+
+                rows.forEach(row => {
+                    const criteria = row.cells[1].textContent;
+                    row.style.display = filterValue === '' || criteria === filterValue ? '' : 'none';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
